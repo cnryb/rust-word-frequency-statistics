@@ -1,9 +1,15 @@
 use regex::Regex;
 
-#[derive(PartialEq, Debug)]
+#[derive(Debug)]
 pub struct WordCount {
     word: String,
     count: usize,
+}
+
+impl PartialEq for WordCount {
+    fn eq(&self, other: &Self) -> bool {
+        self.word == other.word && self.count == other.count
+    }
 }
 
 pub fn statistics(text: &str) -> Vec<WordCount> {
@@ -71,11 +77,11 @@ mod tests {
 
         let expected = vec![
             WordCount {
-                word: "it".to_string(),
+                word: "s".to_string(),
                 count: 1,
             },
             WordCount {
-                word: "s".to_string(),
+                word: "it".to_string(),
                 count: 1,
             },
             WordCount {
@@ -87,8 +93,19 @@ mod tests {
                 count: 1,
             },
         ];
-        assert_eq!(result, expected);
+        assert!(is_equal(&result, &expected));
+    }
+
+    fn is_equal(a: &Vec<WordCount>, b: &Vec<WordCount>) -> bool {
+        if a.len() != b.len() {
+            return false;
+        }
+        for i in 0..a.len() {
+            let item = b.iter().find(|&x| x == &a[i]);
+            if item.is_none() {
+                return false;
+            }
+        }
+        true
     }
 }
-
-// todo compare array
