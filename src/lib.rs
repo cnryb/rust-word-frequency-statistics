@@ -1,9 +1,18 @@
+/*! 这个是一个简单的统计文本中单词出现的次数的程序
+ * 
+ */
+
+// 包和模块级别的注释，可以使用 /*! */ 或 //! ，注意一种方式感叹号前只有个星号
+
 use regex::Regex;
 
+/// 单词出现的次数
 #[derive(Debug)]
 pub struct WordCount {
-    word: String,
-    count: usize,
+    /// 单词
+   pub word: String,
+   /// 出现的次数
+   pub count: usize,
 }
 
 impl PartialEq for WordCount {
@@ -12,6 +21,11 @@ impl PartialEq for WordCount {
     }
 }
 
+/**
+ * 统计文本中单词出现的次数
+ * 
+ * * `text` - 要统计的文本
+ */
 pub fn statistics(text: &str) -> Vec<WordCount> {
     let mut words: Vec<WordCount> = Vec::new();
     let re = Regex::new(r"\w+").unwrap();
